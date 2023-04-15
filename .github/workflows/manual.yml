@@ -4,7 +4,8 @@ name: Manual update cardlist
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -22,5 +23,6 @@ jobs:
     - name: pull card list
       run:  curl https://netrunnerdb.com/api/2.0/public/cards | jq -c ' [ .data[].code ] ' > cardlist.tmp
     - name: update index.html
-      run: sed -i -e '/^const cardList/{n;r cardlist.tmp
-;d}' random-netrunner-card/index.html
+      run: |
+        sed -i -e '/^const cardList/{n;r cardlist.tmp
+        ;d}' random-netrunner-card/index.html
